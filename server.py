@@ -12,7 +12,7 @@ with TCPServer(("", PORT), SimpleHTTPRequestHandler) as httpd:
     print(f"Serving files from {os.getcwd()} at http://localhost:{PORT}")
     markdown = f"""<style>
     body {{
-        font-size: 2rem;
+        font-size: 3rem;
     }}
 </style>
 # __[Link](http://localhost:{PORT})__"""
