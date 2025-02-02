@@ -1,1 +1,1 @@
-# __<a href="http://localhost:8000" target="_blank" rel="noopener noreferrer">Link</a>__
+# __[Link](http://localhost:8000)__
