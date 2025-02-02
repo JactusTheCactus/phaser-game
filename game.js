@@ -16,7 +16,7 @@ function preload() {
 }
 
 function create() {
-    this.add.image(400, 300, 'logo');
+    this.add.image(100, 100, 'logo');
 }
 
 function update() {
