@@ -10,12 +10,7 @@ PORT = 8000
 # Create a TCP server with the SimpleHTTPRequestHandler to serve files
 with TCPServer(("", PORT), SimpleHTTPRequestHandler) as httpd:
     print(f"Serving files from {os.getcwd()} at http://localhost:{PORT}")
-    markdown = f"""<style>
-    body {{
-        font-size: 3rem;
-    }}
-</style>
-# __[Link](http://localhost:{PORT})__"""
+    markdown = f"""# __[Link](http://localhost:{PORT})__"""
     with open('README.md','w') as file:
         file.write(markdown)
     httpd.serve_forever()
