@@ -20,5 +20,5 @@ function create() {
 }
 
 function update() {
-    // Game loop
+    // Game loop logic
 }
