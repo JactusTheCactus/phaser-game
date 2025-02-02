@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Concordium</title>
+</head>
+<style>
+    body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 2rem;
+    }
+    h1 {
+        text-decoration: underline;
+    }
+</style>
+<body>
+    <h1>The Concordium</h1>
+    <ul id="json-list"></ul>
+
+    <script>
+        // Function to fetch JSON and convert to list
+        function jsonToList(data) {
+            const ul = document.getElementById("json-list");
+
+            // If it's an object, get the values (items)
+            const items = Object.values(data);
+
+            function edict(item) {
+                const edictMap = {
+                    "Sin": "Curse",
+                    "Virtue": "Blessing"
+                };
+
+                return edictMap[item.alignment] || "Unknown";
+                }
+            
+            function team(item) {
+                const teamMap = {
+                    "Sin": "Deadly",
+                    "Virtue": "Heavenly"
+                };
+
+                return teamMap[item.alignment] || "Unknown";
+                }
+            
+            function ifnone(data) {
+                if (data !== "") {
+                    return data
+                }
+            }
+
+            items.forEach(item => {
+                const p = document.createElement("p");
+                const formattedDescription = item.description.replace(/\\n/g, '<br>').replace('- ','<ul><li>').replace('Extra Details:','<u>Extra Details:</u>');
+
+                const getRole = (item) => {
+                    if (item.rank && (item.rank.startsWith("I"))) {
+                        return "Captain";
+                    } else if (item.rank && (item.rank.startsWith("V"))) {
+                        return "Hunter";
+                    } else if (item.rank && (item.rank.startsWith("F"))) {
+                        return "Smith";
+                    } else if (item.rank && (item.rank.startsWith("D"))) {
+                        return "Warden";
+                    } else if (item.rank && (item.rank.startsWith("L"))) {
+                        return "Seer";
+                    } else if (item.rank && (item.rank.startsWith("E"))) {
+                        return "Champion";
+                    } else if (item.rank && (item.rank.startsWith("B"))) {
+                        return "Warlord";
+                    } else {
+                        return "Member";
+                    }
+                };
+
+                console.log(getRole(item)); // Outputs: N/A
+                if (item.description !== "") {
+                    description = `<br><u>Description:</u><br>${formattedDescription}`
+                }
+                else  {
+                    description = formattedDescription
+                }
+                if (item.epithet !== "") {
+                    epithet = `<i><b>"${item.epithet}"</b></i>`
+                }
+                else  {
+                    epithet = item.epithet
+                }
+                p.innerHTML = `
+<h2>${item.name} ${item.rank}:</h2>
+<p>${epithet}</p>
+<li><b>${getRole(item)}</b> of The Seven ${team(item)} ${item.alignment}s</li>
+<li>The <b>${item.alignment}</b> of <b>${item.aspect}</b></li>
+<li>The <b>${edict(item)}</b> of The <b>${item.animal}</b></li>
+<li>Weapon: <b>${item.weapon}</b></li>
+<li>Gear Colour: <b>${item.colour}</b></li>
+<li>Power: <b>${item.power}</b></li>
+<li>Species: <b>${item.species}</b></li>
+${description}`.replace(`</h2><br>`,'</h2>');
+                ul.appendChild(p);
+                console.log(p.innerHTML)
+            });
+        }
+
+        // Fetch the JSON file and then convert to list
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                jsonToList(data);
+            })
+            .catch(error => {
+                console.error('Error loading JSON:', error);
+            });
+    </script>
+</body>
+</html>
